@@ -26,11 +26,23 @@ public class PembayaranService {
     }
     
     public Pembayaran saveCash(String idPembayaran, double jumlah, KursusMasak kursus, String noRekening) {
+        if (idPembayaran == null || idPembayaran.trim().isEmpty()) {
+            throw new IllegalArgumentException("ID Pembayaran tidak boleh kosong");
+        }
+        if (jumlah <= 0) {
+            throw new IllegalArgumentException("Jumlah pembayaran harus lebih dari 0");
+        }
         PembayaranCash pembayaran = new PembayaranCash(idPembayaran, jumlah, kursus, noRekening);
         return pembayaranRepository.save(pembayaran);
     }
     
     public Pembayaran saveTransfer(String idPembayaran, double jumlah, KursusMasak kursus, double jumlahTunai) {
+        if (idPembayaran == null || idPembayaran.trim().isEmpty()) {
+            throw new IllegalArgumentException("ID Pembayaran tidak boleh kosong");
+        }
+        if (jumlah <= 0) {
+            throw new IllegalArgumentException("Jumlah pembayaran harus lebih dari 0");
+        }
         PembayaranTransfer pembayaran = new PembayaranTransfer(idPembayaran, jumlah, kursus, jumlahTunai);
         return pembayaranRepository.save(pembayaran);
     }
