@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head}">
+    <title>Form Pembayaran</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    
+    <div class="container">
+        <div th:replace="~{fragments/layout :: alerts}"></div>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Tambah Pembayaran Baru</h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/pembayaran/save}" method="post">
+                            <div class="mb-3">
+                                <label for="idPembayaran" class="form-label">ID Pembayaran *</label>
+                                <input type="text" class="form-control" id="idPembayaran" name="idPembayaran" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="kursusId" class="form-label">Kursus *</label>
+                                <select class="form-select" id="kursusId" name="kursusId" required>
+                                    <option value="">-- Pilih Kursus --</option>
+                                    <option th:each="kursus : ${kursusList}" 
+                                            th:value="${kursus.idKursus}"
+                                            th:text="${kursus.namaKursus + ' - Rp ' + #numbers.formatDecimal(kursus.biaya, 0, 'COMMA', 0, 'POINT')}">
+                                    </option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="jumlah" class="form-label">Jumlah Pembayaran (Rp) *</label>
+                                <input type="number" class="form-control" id="jumlah" name="jumlah" 
+                                       min="1" step="1000" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Tipe Pembayaran *</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tipePembayaran" 
+                                           id="tipeCash" value="CASH" checked onchange="togglePaymentFields()">
+                                    <label class="form-check-label" for="tipeCash">
+                                        Cash
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tipePembayaran" 
+                                           id="tipeTransfer" value="TRANSFER" onchange="togglePaymentFields()">
+                                    <label class="form-check-label" for="tipeTransfer">
+                                        Transfer
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3" id="cashFields">
+                                <label for="noRekening" class="form-label">No. Rekening</label>
+                                <input type="text" class="form-control" id="noRekening" name="noRekening">
+                            </div>
+                            
+                            <div class="mb-3" id="transferFields" style="display: none;">
+                                <label for="jumlahTunai" class="form-label">Jumlah Tunai</label>
+                                <input type="number" class="form-control" id="jumlahTunai" name="jumlahTunai" 
+                                       min="0" step="1000" value="0">
+                            </div>
+                            
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-warning">Simpan</button>
+                                <a th:href="@{/pembayaran}" class="btn btn-secondary">Batal</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+    
+    <script>
+        function togglePaymentFields() {
+            var tipeCash = document.getElementById('tipeCash').checked;
+            document.getElementById('cashFields').style.display = tipeCash ? 'block' : 'none';
+            document.getElementById('transferFields').style.display = tipeCash ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>

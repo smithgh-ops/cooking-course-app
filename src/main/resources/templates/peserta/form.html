@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head}">
+    <title>Form Peserta</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0" th:text="${peserta.idPeserta != null && !peserta.idPeserta.isEmpty()} ? 'Edit Peserta' : 'Tambah Peserta Baru'">Form Peserta</h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/peserta/save}" th:object="${peserta}" method="post">
+                            <div class="mb-3">
+                                <label for="idPeserta" class="form-label">ID Peserta *</label>
+                                <input type="text" class="form-control" id="idPeserta" th:field="*{idPeserta}" 
+                                       th:readonly="${peserta.idPeserta != null && !peserta.idPeserta.isEmpty()}"
+                                       required>
+                                <div th:if="${#fields.hasErrors('idPeserta')}" class="text-danger" th:errors="*{idPeserta}"></div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama *</label>
+                                <input type="text" class="form-control" id="nama" th:field="*{nama}" required>
+                                <div th:if="${#fields.hasErrors('nama')}" class="text-danger" th:errors="*{nama}"></div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <textarea class="form-control" id="alamat" th:field="*{alamat}" rows="2"></textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="noHP" class="form-label">No. HP</label>
+                                <input type="text" class="form-control" id="noHP" th:field="*{noHP}">
+                            </div>
+                            
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-success">Simpan</button>
+                                <a th:href="@{/peserta}" class="btn btn-secondary">Batal</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>
