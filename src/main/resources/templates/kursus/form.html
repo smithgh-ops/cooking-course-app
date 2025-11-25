@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head}">
+    <title>Form Kursus</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0" th:text="${kursus.idKursus != null && !kursus.idKursus.isEmpty()} ? 'Edit Kursus' : 'Tambah Kursus Baru'">Form Kursus</h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/kursus/save}" th:object="${kursus}" method="post">
+                            <div class="mb-3">
+                                <label for="idKursus" class="form-label">ID Kursus *</label>
+                                <input type="text" class="form-control" id="idKursus" th:field="*{idKursus}" 
+                                       th:readonly="${kursus.idKursus != null && !kursus.idKursus.isEmpty()}"
+                                       required>
+                                <div th:if="${#fields.hasErrors('idKursus')}" class="text-danger" th:errors="*{idKursus}"></div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="namaKursus" class="form-label">Nama Kursus *</label>
+                                <input type="text" class="form-control" id="namaKursus" th:field="*{namaKursus}" required>
+                                <div th:if="${#fields.hasErrors('namaKursus')}" class="text-danger" th:errors="*{namaKursus}"></div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="biaya" class="form-label">Biaya (Rp) *</label>
+                                <input type="number" class="form-control" id="biaya" th:field="*{biaya}" 
+                                       min="0" step="1000" required>
+                                <div th:if="${#fields.hasErrors('biaya')}" class="text-danger" th:errors="*{biaya}"></div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="instrukturId" class="form-label">Instruktur</label>
+                                <select class="form-select" id="instrukturId" name="instrukturId">
+                                    <option value="">-- Pilih Instruktur --</option>
+                                    <option th:each="instruktur : ${instrukturList}" 
+                                            th:value="${instruktur.idInstruktur}"
+                                            th:text="${instruktur.nama + ' (' + instruktur.spesialisasi + ')'}"
+                                            th:selected="${kursus.objInstruktur != null && kursus.objInstruktur.idInstruktur == instruktur.idInstruktur}">
+                                    </option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="pesertaId" class="form-label">Peserta</label>
+                                <select class="form-select" id="pesertaId" name="pesertaId">
+                                    <option value="">-- Pilih Peserta --</option>
+                                    <option th:each="peserta : ${pesertaList}" 
+                                            th:value="${peserta.idPeserta}"
+                                            th:text="${peserta.nama}"
+                                            th:selected="${kursus.objPeserta != null && kursus.objPeserta.idPeserta == peserta.idPeserta}">
+                                    </option>
+                                </select>
+                            </div>
+                            
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-info text-white">Simpan</button>
+                                <a th:href="@{/kursus}" class="btn btn-secondary">Batal</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

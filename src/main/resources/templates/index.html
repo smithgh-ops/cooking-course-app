@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head}">
+    <title>Kursus Masak</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="text-center mb-5">
+                    <h1 class="display-4">🍳 Selamat Datang di Aplikasi Kursus Masak</h1>
+                    <p class="lead text-muted">Sistem Manajemen Kursus Masak - Spring Boot Demo</p>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h2 class="card-title">👨‍🍳 Instruktur</h2>
+                                <p class="card-text">Kelola data instruktur kursus masak dengan spesialisasi masing-masing.</p>
+                                <a th:href="@{/instruktur}" class="btn btn-primary">Lihat Instruktur</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h2 class="card-title">👥 Peserta</h2>
+                                <p class="card-text">Kelola data peserta yang terdaftar pada kursus masak.</p>
+                                <a th:href="@{/peserta}" class="btn btn-success">Lihat Peserta</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h2 class="card-title">📚 Kursus</h2>
+                                <p class="card-text">Kelola kursus masak yang tersedia dengan instruktur dan peserta.</p>
+                                <a th:href="@{/kursus}" class="btn btn-info text-white">Lihat Kursus</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h2 class="card-title">💰 Pembayaran</h2>
+                                <p class="card-text">Kelola pembayaran kursus baik secara cash maupun transfer.</p>
+                                <a th:href="@{/pembayaran}" class="btn btn-warning">Lihat Pembayaran</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>
